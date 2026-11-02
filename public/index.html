@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#121212">
+  <title>Music Hub</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <img
+        src="/skull4.jpeg"
+        alt="Music Hub Skull Logo"
+        class="brand-icon"
+      >
+      <span>3 a.m. Therapy</span>
+    </div>
+
+    <nav>
+      <button class="nav-item active" data-page="home">⌂ <span>Home</span></button>
+      <button class="nav-item" data-page="search">⌕ <span>Search</span></button>
+      <button class="nav-item" data-page="liked">♥ <span>Liked Songs</span></button>
+    </nav>
+   
+    <div class="sidebar-title">Genres</div>
+    <div class="genres">
+      <button data-genre="Electronic">Electronic</button>
+      <button data-genre="Hip Hop">Hip Hop</button>
+      <button data-genre="Dance">Dance</button>
+      <button data-genre="Rock">Rock</button>
+      <button data-genre="Pop">Pop</button>
+      <button data-genre="R&B">R&B</button>
+      <button data-genre="Jazz">Jazz</button>
+      <button data-genre="Classical">Classical</button>
+    </div>
+  
+
+    <div class="sidebar-note">
+      Hi! I'm Dipu. I made it to save y'all from the "two songs, then four commercials" tax of spotify. Enjoy ad free music. If you wanna thank me, you can buy me coffee and cigarette. I'll appreciate that :)
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="mobileMenu" class="icon-button">☰</button>
+
+      <form id="searchForm" class="search">
+        <span>⌕</span>
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="What do you want to play?"
+          autocomplete="off"
+        >
+      </form>
+
+      <div class="account">3 a.m. Therapy</div>
+    </header>
+
+    <div id="status" class="status"></div>
+
+    <section id="homePage" class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">YOUR MUSIC SPACE</p>
+          <h1>Good music.<br>Bad Life.</h1>
+          <p>Fuck Spotify...Go ad free!</p>
+          <button id="heroPlay" class="primary-button">▶ Start vibing</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <h2>Trending now</h2>
+          <button class="text-button" data-show="trending">Show all</button>
+        </div>
+        <div id="trending" class="track-grid"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <h2>Underground picks</h2>
+        </div>
+        <div id="underground" class="track-grid"></div>
+      </section>
+    </section>
+
+    <section id="searchPage" class="page hidden">
+      <div class="page-title">
+        <p class="eyebrow">SEARCH</p>
+        <h1 id="searchHeading">Search results</h1>
+      </div>
+      <div id="searchResults" class="result-list"></div>
+    </section>
+
+    <section id="likedPage" class="page hidden">
+      <div class="page-title">
+        <p class="eyebrow">YOUR LIBRARY</p>
+        <h1>Liked Songs</h1>
+      </div>
+      <div id="likedResults" class="result-list"></div>
+    </section>
+  </main>
+
+  <footer class="player">
+    <div class="now-playing">
+      <img id="playerArt" src="" alt="">
+      <div>
+        <strong id="playerTitle">Nothing playing</strong>
+        <span id="playerArtist">Choose a track</span>
+      </div>
+      <button id="likeCurrent" class="heart" title="Like">♡</button>
+    </div>
+
+    <div class="player-center">
+      <div class="player-buttons">
+        <button id="shuffle" class="small-button">⤨</button>
+        <button id="previous" class="small-button">◀</button>
+        <button id="playPause" class="play-button">▶</button>
+        <button id="next" class="small-button">▶</button>
+        <button id="repeat" class="small-button">↻</button>
+      </div>
+
+      <div class="timeline">
+        <span id="currentTime">0:00</span>
+        <input id="progress" type="range" min="0" max="100" value="0">
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="volume">
+      <span>🔊</span>
+      <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8">
+    </div>
+
+    <audio id="audio" preload="metadata"></audio>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
