@@ -260,10 +260,20 @@ app.get("/api/stream/:id", async (req, res) => {
 });
 
 // Frontend fallback (Express 5)
-app.get("/{*splat}", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+//app.get("/{*splat}", (req, res) => {
+//res.sendFile(path.join(__dirname, "public", "index.html"));
+//});
 
-app.listen(PORT, () => {
-  console.log(`Music Hub running at http://localhost:${PORT}`);
-});
+//app.listen(PORT, () => {
+//console.log(`3.a.m. therapy running at http://localhost:${PORT}`);
+//});
+//newww
+// Export Express app for Vercel.
+export default app;
+
+// Run normally on local development and Render.
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`3.a.m. therapy running at http://localhost:${PORT}`);
+  });
+}
