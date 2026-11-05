@@ -121,6 +121,44 @@ async function searchSaavn(query, limit = 24) {
     .filter(track => track && track.id)
     .map(normalize);
 }
+// new line dipu
+
+app.get("/api/debug-search", async (req, res) => {
+  try {
+    const query = String(req.query.q || "").trim();
+
+    if (!query) {
+      return res.status(400).json({ error: "Search query is required." });
+    }
+
+    const data = await saavnGet({
+      __call: "search.getResults",
+      q: query,
+      n: "40",
+      p: "1"
+    });
+
+    const results = Array.isArray(data.results) ? data.results : [];
+
+    res.json({
+      query,
+      apiBase: SAAVN_API_BASE,
+      resultCount: results.length,
+      results: results.map(track => ({
+        id: track.id,
+        title: cleanText(track.song || track.title || ""),
+        artist: cleanText(track.primary_artists || track.singers || ""),
+        album: cleanText(track.album || ""),
+        permalink: track.perma_url || "",
+        hasAudio: Boolean(track.encrypted_media_url)
+      }))
+    });
+  } catch (error) {
+    console.error("Debug search failed:", error.message);
+    res.status(500).json({ error: "JioSaavn diagnostic search failed." });
+  }
+});
+//end line dipu
 
 function handleApiError(res, error, message) {
   console.error(
