@@ -247,7 +247,59 @@ app.get("/api/genre/:genre", async (req, res) => {
     handleApiError(res, error, "Unable to load this genre.");
   }
 });
+//swamiya
+app.get("/api/debug-stream/:id", async (req, res) => {
+  const id = String(req.params.id || "").replace(/^track_/, "");
 
+  try {
+    const data = await saavnGet({
+      __call: "song.getDetails",
+      pids: id
+    });
+
+    const candidates = [];
+
+    function inspect(value, depth = 0) {
+      if (depth > 4 || value == null) return;
+
+      if (Array.isArray(value)) {
+        value.forEach(item => inspect(item, depth + 1));
+        return;
+      }
+
+      if (typeof value !== "object") return;
+
+      if (value.id || value.encrypted_media_url) {
+        candidates.push({
+          id: value.id || null,
+          title: cleanText(value.song || value.title || ""),
+          artist: cleanText(
+            value.primary_artists || value.singers || ""
+          ),
+          hasEncryptedMediaUrl: Boolean(value.encrypted_media_url)
+        });
+      }
+
+      Object.values(value).forEach(item => inspect(item, depth + 1));
+    }
+
+    inspect(data);
+
+    res.json({
+      requestedId: id,
+      responseType: Array.isArray(data) ? "array" : typeof data,
+      responseKeys:
+        data && typeof data === "object" && !Array.isArray(data)
+          ? Object.keys(data)
+          : [],
+      candidates
+    });
+  } catch (error) {
+    res.status(502).json({
+      error: error.message || "Diagnostic request failed."
+    });
+  }
+});
 // Resolve a track ID to a stream URL from a fresh catalog response.
 app.get("/api/stream/:id", async (req, res) => {
   const id = String(req.params.id || "").replace(/^track_/, "");
